@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Finanzas Personales</title>
+    <style>
+        /* Estilos básicos para la página */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        main {
+            margin: 20px auto;
+            max-width: 800px;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+        input, button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .results {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Gestor de Finanzas Personales</h1>
+    </header>
+    <main>
+        <section class="form-section">
+            <h2>Registrar Ingresos y Gastos</h2>
+            <form id="finance-form">
+                <label for="type">Tipo de Registro:</label>
+                <select id="type">
+                    <option value="ingreso">Ingreso</option>
+                    <option value="gasto">Gasto</option>
+                </select>
+                <label for="amount">Monto:</label>
+                <input type="number" id="amount" placeholder="Ingresa el monto" required>
+                <button type="button" onclick="addEntry()">Añadir</button>
+            </form>
+        </section>
+        <section class="results">
+            <h2>Resumen Financiero</h2>
+            <p id="balance">Balance: $0</p>
+            <p id="total-income">Total Ingresos: $0</p>
+            <p id="total-expenses">Total Gastos: $0</p>
+        </section>
+    </main>
+    <script>
+        // Variables para almacenar los datos
+        let totalIncome = 0;
+        let totalExpenses = 0;
+
+        // Función para añadir un registro
+        function addEntry() {
+            const type = document.getElementById('type').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+
+            if (!isNaN(amount) && amount > 0) {
+                if (type === 'ingreso') {
+                    totalIncome += amount;
+                } else if (type === 'gasto') {
+                    totalExpenses += amount;
+                }
+
+                // Actualizar el balance y los totales
+                const balance = totalIncome - totalExpenses;
+                document.getElementById('balance').textContent = `Balance: $${balance}`;
+                document.getElementById('total-income').textContent = `Total Ingresos: $${totalIncome}`;
+                document.getElementById('total-expenses').textContent = `Total Gastos: $${totalExpenses}`;
+
+                // Limpiar el campo de monto
+                document.getElementById('amount').value = '';
+            } else {
+                alert('Por favor, ingrese un monto válido.');
+            }
+        }
+    </script>
+</body>
+</html>
